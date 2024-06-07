@@ -29,7 +29,28 @@ class WordsTest(LiveServerTestCase):
         ic(f"Trying URL: [{url}]")
         self.browser.get(url)
         # I see a word to guess
-        word_to_guess = self.browser.find_element(By.ID, "id_guess_word").text
-        self.assertIn(word_to_guess, self.words)
-        # I see a form proposing me to guess the word
+        word_to_guess = self.browser.find_element(By.ID, "id_word_srpski").text
         # The word to guess is one in the list
+        self.assertIn(word_to_guess, self.words)
+        # I see a form proposing me to add the drugi word (to guess)
+        
+    
+    def test_guess_correct_word(self):
+        # Open the word guessing page
+        # Get the word to guess from element id=id_word_srpski
+        # Find the word in the list
+        # Get the correct guess
+        # Fill it into the input box with id=id_word_drugi
+        # Send the form by clicking "Submit" button
+        # Get the reply confirming the guess is correct
+        pass
+
+    def test_guess_incorrect_word(self):
+        # Open the word guessing page
+        # Get the word to guess from element id=id_word_srpski
+        # Find the word in the list
+        # Get an incorrect guess
+        # Fill it into the input box with id=id_word_drugi
+        # Send the form by clicking "Submit" button
+        # Get the reply saying the guess was incorrect
+        pass
