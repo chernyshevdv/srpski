@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Guess word{% endblock title %}
+
+{% block navigation %}
+    {% for l in lists %}
+        {% if l.id == list.id %}
+        <li class="list-group-item active">{{l.title}}</li>
+        {% else %}
+        <li class="list-group-item"><a href="{% url "guess_words_in_list" id=l.id %}">{{l.title}}</a></li>
+        {% endif %}
+    {% endfor %}
+{% endblock navigation %}
+
+{% block content %}
+<h2>Guess word:</h2>
+<div id="id_guess_word">{{word.srpski}}</div>
+{% endblock content %}
