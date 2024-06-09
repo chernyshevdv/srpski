@@ -26,7 +26,7 @@ def guess_words_in_list(request: HttpRequest, id: int):
     # By this row, we should have session['list_id] and session['words']
     words = request.session.get('words')
     ic(lst, words)
-    nav_lists = WordList.objects.all()
+    nav_lists = WordList.objects.all().order_by("title")
     
     if request.method == "POST":
         tries += 1
