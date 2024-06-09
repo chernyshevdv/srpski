@@ -4,6 +4,7 @@ from icecream import ic
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+import time 
 from words import models as words_models
 
 MAX_WAIT = 5
@@ -25,8 +26,7 @@ class WordsTest(LiveServerTestCase):
 
     def test_get_guess_form(self):
         # I open the word guessing page for a chosen List
-        url = f"{self.live_server_url}/words/lists/{self.list.id}"
-        ic(f"Trying URL: [{url}]")
+        url = f"{self.live_server_url}/words/lists/{self.list.id}/guess"
         self.browser.get(url)
         # I see a word to guess
         word_to_guess = self.browser.find_element(By.ID, "id_word_srpski").text
@@ -37,20 +37,44 @@ class WordsTest(LiveServerTestCase):
     
     def test_guess_correct_word(self):
         # Open the word guessing page
+        url = f"{self.live_server_url}/words/lists/{self.list.id}/guess"
+        self.browser.get(url)
+
         # Get the word to guess from element id=id_word_srpski
+        word_to_guess = self.browser.find_element(By.ID, "id_word_srpski").text
+
         # Find the word in the list
+        word = self.list.word_set.filter(srpski=word_to_guess).first()
+        self.assertIsNotNone(word, f"Must find a guessed word in the DB")
         # Get the correct guess
+        correct_guess = word.drugi
         # Fill it into the input box with id=id_word_drugi
+        guess_form_element = self.browser.find_element(By.ID, "id_guess")
+        guess_form_element.send_keys(correct_guess)
         # Send the form by clicking "Submit" button
+        guess_form_element.send_keys(Keys.ENTER)
         # Get the reply confirming the guess is correct
-        pass
+        time.sleep(1)
+        page_text = self.browser.find_element(By.TAG_NAME, "body").text
+        self.assertIn("Tako je!", page_text)
 
     def test_guess_incorrect_word(self):
         # Open the word guessing page
+        url = f"{self.live_server_url}/words/lists/{self.list.id}/guess"
+        self.browser.get(url)
+
         # Get the word to guess from element id=id_word_srpski
+        word_to_guess = self.browser.find_element(By.ID, "id_word_srpski").text
+
         # Find the word in the list
-        # Get an incorrect guess
+        incorrect_guess = "Abrakadabra!"
         # Fill it into the input box with id=id_word_drugi
+        guess_form_element = self.browser.find_element(By.ID, "id_guess")
+        guess_form_element.send_keys(incorrect_guess)
         # Send the form by clicking "Submit" button
-        # Get the reply saying the guess was incorrect
-        pass
+        guess_form_element.send_keys(Keys.ENTER)
+        # Get the reply confirming the guess is correct
+        time.sleep(1)
+        page_text = self.browser.find_element(By.TAG_NAME, "body").text
+        self.assertNotIn("Tako je!", page_text)
+        self.assertIn("Ne tačno...", page_text)

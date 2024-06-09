@@ -13,6 +13,17 @@
 {% endblock navigation %}
 
 {% block content %}
-<h2>Guess word:</h2>
-<div id="id_guess_word">{{word.srpski}}</div>
+{% if count_left > 0 %}
+Guess word:
+<div id="id_word_srpski">{{word.srpski}}</div>
+{% load crispy_forms_tags %}
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="submit" id="id_submit"/>
+</form>
+{% endif %}
+<p>Words left to learn: <span id="words_left">{{count_left}}</span></p>
+<p>Words in the list: <span id="words_total">{{count_total}}</span></p>
+<p>Tries so far: <span id="tries">{{tries}}</span></p>
 {% endblock content %}

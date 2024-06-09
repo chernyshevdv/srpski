@@ -21,5 +21,5 @@ from words import views as words_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('words/lists/', words_views.list_wordlists, name="words_lists"),
-    path('words/lists/<int:id>', words_views.guess_words_in_list, name="guess_words_in_list"),
+    path('words/lists/<int:id>/guess', words_views.guess_words_in_list, name="guess_words_in_list"),
 ]
