@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.http import HttpRequest, HttpResponse, Http404
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from icecream import ic
 import random
 from thefuzz import fuzz
@@ -9,20 +9,21 @@ from .forms import GuessForm
 from .models import Word, WordList
 
 def list_wordlists(request: HttpRequest):
-    rows = WordList.objects.all().order_by('title')
+    lst = WordList.objects.first()
 
-    return render(request, "words_lists_list.html", {'rows': rows})
+    return redirect("guess_words_in_list", id=lst.id)
 
 
 def guess_words_in_list(request: HttpRequest, id: int):
     lst = get_object_or_404(WordList, pk=id)
     session_list_id = request.session.get('list_id', 0)
+    tries = request.session.get('tries', 0)
     if session_list_id != id:
         request.session['list_id'] = id
         request.session['words'] = list(lst.word_set.all().values())
-    tries = request.session.get('tries', 0)
-    # By this row, we should have session['list_id] and session['words']
+        tries = 0
     
+    # By this row, we should have session['list_id] and session['words']
     words = request.session.get('words')
     ic(lst, words)
     nav_lists = WordList.objects.all()

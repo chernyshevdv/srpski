@@ -14,8 +14,7 @@
 
 {% block content %}
 {% if count_left > 0 %}
-Guess word:
-<div id="id_word_srpski">{{word.srpski}}</div>
+Guess word: <strong><span id="id_word_srpski">{{word.srpski}}</span></strong>
 {% load crispy_forms_tags %}
 <form method="post">
     {% csrf_token %}
