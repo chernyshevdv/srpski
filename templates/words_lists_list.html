@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Reči{% endblock title %}
+
+{% block navigation %}
+{% for list in rows %}
+    <li class="list-group-item">{{list.title}}</li>
+{% endfor %}
+{% endblock navigation %}
+
+{% block content %}
+<h2>Reči</h2>
+Guess word:
+<div id="id_guess_word">{{word.srpski}}</div>
+{% endblock content %}

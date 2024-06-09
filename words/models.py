@@ -11,3 +11,9 @@ class Word(models.Model):
     list = models.ForeignKey(to=WordList, on_delete=models.CASCADE)
     srpski = models.CharField(max_length=250)
     drugi = models.CharField(max_length=250)
+
+    def __str__(self) -> str:
+        return f"Word: {self.srpski}"
+    
+    def __eq__(self, other_id:int) -> bool:
+        return self.id == other_id
