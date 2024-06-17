@@ -14,15 +14,21 @@
 
 {% block content %}
 {% if count_left > 0 %}
-Guess word: <strong><span id="id_word_srpski">{{word.srpski}}</span></strong>
+
 {% load crispy_forms_tags %}
-<form method="post">
+<form method="post" class="border">
     {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" value="submit" id="id_submit"/>
+    <div class="mb-3 px-5 py-5">
+        <h2>Guess the word</h2>
+        <label for="id_guess" class="form-label">Guess word: <strong><span id="id_word_srpski">{{word.srpski}}</span></strong></label>
+        {{ form|crispy }}
+        <input type="submit" value="submit" id="id_submit" class="btn btn-primary rounded"/>
+    </div>
 </form>
 {% endif %}
-<p>Words left to learn: <span id="words_left">{{count_left}}</span></p>
-<p>Words in the list: <span id="words_total">{{count_total}}</span></p>
-<p>Tries so far: <span id="tries">{{tries}}</span></p>
+<div class="mb-3 row">
+<div class="col col-auto">Words left to learn: <span id="words_left">{{count_left}}</span></div>
+<div class="col col-auto">Words in the list: <span id="words_total">{{count_total}}</span></div>
+<div class="col col-auto">Tries so far: <span id="tries">{{tries}}</span></div>
+</div>
 {% endblock content %}

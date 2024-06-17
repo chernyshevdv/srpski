@@ -51,7 +51,7 @@ def guess_words_in_list(request: HttpRequest, id: int):
                 else:
                     ic("no", x['id'], word_id)
         else:
-            msg = f"Ne tačno... Pravo je: {word.drugi}"
+            msg = f"Nije tačno... Pravo je: {word.drugi}"
             cls = messages.ERROR
             tags = "alert alert-warning"
         
@@ -63,7 +63,7 @@ def guess_words_in_list(request: HttpRequest, id: int):
     if count_left == 0:
         success_rate = 100 * count_total / tries 
         messages.add_message(request, level=messages.INFO, 
-                             message=f"Well done! You have guessed all the words. Success rate is {success_rate}%! Try another list!",
+                             message=f"Well done! You have guessed all the words. Success rate is {success_rate:.0f}%! Try another list!",
                              extra_tags="alert alert-success")
         word_to_guess = {'id': 0}
     else:

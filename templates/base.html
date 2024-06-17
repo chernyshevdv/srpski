@@ -5,13 +5,14 @@
         <title>Učim Srpski: {% block title %}{% endblock %}</title>
 		{% load static %}
 		<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+        <script src="https://kit.fontawesome.com/9014d8015b.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <div class="container-fluid">
             <div class="row">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
-						<img src="/static/srpski.png" alt="" width="50">
+                        <img src="/static/srpski.png" alt="" width="50">
                         <a class="navbar-brand" href="#">Učim srpski</a>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
@@ -23,10 +24,15 @@
                                 </li>
                             </ul>
                         </div>
+                        <form class="input-group rounded col d-flex justify-content-end">
+                            <input type="search" class="form-control rounded" id="id_search" name="search" placeholder="traži reč/izraz..."/>
+                            <span class="input-group-text border-0"><button type="button" class="btn btn-light"><i class="fas fa-search"></i></button></span>
+                        </form>
                     </div>
                 </nav>
             </div>
-            <div class="row flex-nowrap">
+            
+            <div class="row flex-nowrap d-flex">
                 <div class="col-3 bg-light">
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <ul id="menu" class="list-group">
