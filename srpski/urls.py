@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from words import views as words_views
+from theory import views as theory_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('words/lists/', words_views.list_wordlists, name="words_lists"),
     path('words/lists/<int:id>/guess', words_views.guess_words_in_list, name="guess_words_in_list"),
+    path('theory/cases/', theory_views.cases, name="theory_cases")
 ]
