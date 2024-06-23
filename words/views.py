@@ -77,3 +77,10 @@ def guess_words_in_list(request: HttpRequest, id: int):
                                                      'word': word_to_guess, 'form': form, 
                                                      'words': words, 'count_left': count_left, 
                                                      'count_total': count_total, 'tries': tries})
+
+
+def show_words_list(request: HttpRequest, id: int):
+    list = get_object_or_404(WordList, id=id)
+    lists = WordList.objects.all().order_by('title')
+    words = get_list_or_404(Word, list=list)
+    return render(request, "words_list.html", {"words": words, "list": list, "lists": lists})

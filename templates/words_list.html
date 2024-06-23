@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Words in list: {{ list.title }}{% endblock title %}
+
+{% block navigation %}
+    {% for l in lists %}
+        {% if l.id == list.id %}
+        <li class="list-group-item active">{{l.title}}</li>
+        {% else %}
+        <li class="list-group-item"><a href="{% url "guess_words_in_list" id=l.id %}" class="nav-link">{{l.title}}&nbsp;<span class="badge bg-dark top-5">{{l.word_set.count}}</span></a></li>
+        {% endif %}
+    {% endfor %}
+{% endblock navigation %}
+
+{% block content %}
+
+<nav class="navbar bg-white justify-content-start">
+    <a class="nav-item btn" href="{% url "guess_words_in_list" list.id %}">pogodi reč!</a>&nbsp;
+    <a class="nav-item btn active" href="{% url "show_words_list" list.id %}">pokaži listu</a>
+</nav>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>srpski</th>
+            <th>drugi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for w in words %}
+        <tr>
+            <td>{{ w.srpski }}</td>
+            <td>{{ w.drugi }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
