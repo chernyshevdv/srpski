@@ -23,11 +23,11 @@
                             <ul class="navbar-nav nav-pills">
                                 {% if "theory" in request.path %}
                                 <li class="nav-item active">
-                                    <a class="nav-link active" aria-current="page" href="/theory/cases">Teorija</a>
+                                    <a class="nav-link active" aria-current="page" href="{% url "theory_cases" %}">Teorija</a>
                                 </li>
                                 {% else %}
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="/theory/cases">Teorija</a>
+                                    <a class="nav-link" aria-current="page" href="{% url "theory_cases" %}">Teorija</a>
                                 </li>
                                 {% endif %}
                                 </li>
