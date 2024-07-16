@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Deklinacija zamenica</h2>
+    <table class="table table-bordered table-sm">
+        <tr valign="middle" class="table-primary">
+            <td align="center"><span class="text-uppercase">padeži</span></td>
+            <td colspan="4" align="center"><span class="text-uppercase">jedina</span></td>
+            <td colspan="3" align="center"><span class="text-uppercase">množina</span></td>
+        </tr>
+        <tr>
+            <td/>
+            <td>1.</td>
+            <td>2.</td>
+            <td>3. m.r., s.r.</td>
+            <td>3. ž.r.</td>
+
+            <td>1.</td>
+            <td>2.</td>
+            <td>3.</td>
+        </tr>
+        <tr>
+            <td><b>Nominativ</b><br/><span class="text-sm">Ko? Šta?</span></td>
+            
+            <td>ja</td>
+            <td>ti</td>
+            <td>on, ono</td>
+            <td>ona</td>
+
+            <td>mi</td>
+            <td>vi</td>
+            <td>oni, one, ona</td>
+        </tr>
+        <tr>
+            <td><b>Genitiv</b></td>
+            
+            <td>mene, me</td>
+            <td>tebe, te</td>
+            <td>njega, ga</td>
+            <td>nje, je</td>
+
+            <td>nâs, nas</td>
+            <td>vâs, vas</td>
+            <td>njih, ih</td>
+        </tr>
+    </table>
+{% endblock content %}
+
+{% block navigation %}
+    {% for s in sections %}
+        {% if s in request.path %}{% set active  %}{% endif %}
+    {% endfor %}
+    <li class="list-group-item"><a class="nav-link" href="{% url "theory_sections" "cases" %}">Padeži imenica</a></li>
+    <li class="list-group-item active"><a class="nav-link" href="{% url "theory_sections" "pronouns" %}">Padeži zamenica</a></li>
+{% endblock navigation %}
