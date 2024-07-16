@@ -1,6 +1,7 @@
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
 
-def cases(request: HttpRequest):
-    return render(request, "theory_cases.html")
+def theory_sections(request: HttpRequest, section: str) -> HttpResponse:
+    SECTIONS = ["cases", "cases_pronouns"]
+    return render(request, f"theory_{section}.html", {"sections": SECTIONS})
