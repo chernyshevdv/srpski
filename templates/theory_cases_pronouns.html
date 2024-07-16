@@ -32,7 +32,10 @@
             <td>oni, one, ona</td>
         </tr>
         <tr>
-            <td><b>Genitiv</b></td>
+            <td>
+                <b>Genitiv</b>
+                <br/><span class="text-sm">Koga? Čega?</span>
+            </td>
             
             <td>mene, me</td>
             <td>tebe, te</td>
@@ -43,13 +46,70 @@
             <td>vâs, vas</td>
             <td>njih, ih</td>
         </tr>
+        <tr>
+            <td>
+                <b>Dativ</b>
+                <br/><span class="text-sm">Kome? Čemu?</span>
+            </td>
+            
+            <td>meni, mi</td>
+            <td>tebi, ti</td>
+            <td>njemu, mu</td>
+            <td>njoj, joj</td>
+
+            <td>nama</td>
+            <td>vama</td>
+            <td>njima, im</td>
+        </tr>
+        <tr>
+            <td>
+                <b>Akuzativ</b>
+                <br/><span class="text-sm">Koga? Šta?</span>
+            </td>
+            
+            <td>mene, me</td>
+            <td>tebe, te</td>
+            <td>njega, ga</td>
+            <td>nju, je, ju</td>
+
+            <td>nas</td>
+            <td>vas</td>
+            <td>njih, ih</td>
+        </tr>
+        <tr>
+            <td>
+                <b>Instrumental</b>
+                <br/><span class="text-sm">Sa kim? Sa čim?</span>
+            </td>
+            
+            <td>sa mnom</td>
+            <td>sa tobom</td>
+            <td>sa njim</td>
+            <td>sa njom</td>
+
+            <td>sa nama</td>
+            <td>sa vama</td>
+            <td>sa njima</td>
+        </tr>
+        <tr>
+            <td>
+                <b>Lokativ</b>
+                <br/><span class="text-sm">O kome? O čemu?</span>
+            </td>
+            
+            <td>o meni</td>
+            <td>o tebi</td>
+            <td>o njemu</td>
+            <td>o njoj</td>
+
+            <td>o nama</td>
+            <td>o vama</td>
+            <td>o njima</td>
+        </tr>
     </table>
 {% endblock content %}
 
 {% block navigation %}
-    {% for s in sections %}
-        {% if s in request.path %}{% set active  %}{% endif %}
-    {% endfor %}
     <li class="list-group-item"><a class="nav-link" href="{% url "theory_sections" "cases" %}">Padeži imenica</a></li>
-    <li class="list-group-item active"><a class="nav-link" href="{% url "theory_sections" "pronouns" %}">Padeži zamenica</a></li>
+    <li class="list-group-item active"><a class="nav-link" href="{% url "theory_sections" "cases_pronouns" %}">Padeži zamenica</a></li>
 {% endblock navigation %}
