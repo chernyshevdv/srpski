@@ -20,9 +20,9 @@ from words import views as words_views
 from theory import views as theory_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('words/lists/', words_views.list_wordlists, name="words_lists"),
-    path('words/lists/<int:id>/guess', words_views.guess_words_in_list, name="guess_words_in_list"),
-    path('words/lists/<int:id>/show', words_views.show_words_list, name="show_words_list"),
-    path('theory/<str:section>/', theory_views.theory_sections, name="theory_sections")
+    path('srpski/admin/', admin.site.urls),
+    path('srpski/words/lists/', words_views.list_wordlists, name="words_lists"),
+    path('srpski/words/lists/<int:id>/guess', words_views.guess_words_in_list, name="guess_words_in_list"),
+    path('srpski/words/lists/<int:id>/show', words_views.show_words_list, name="show_words_list"),
+    path('srpski/theory/cases/', theory_views.cases, name="theory_cases")
 ]
