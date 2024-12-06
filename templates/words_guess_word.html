@@ -23,6 +23,9 @@
     </div>
 </form>
 {% endif %}
+<div class="progress">
+    <div class="progress-bar" role="progress-bar" style="width:{{odsto}}%" aria-valuenow="{{count_left}}" aria-valuemax="{{count_total}}"></div>
+</div>
 <div class="mb-3 row">
 <div class="col col-auto">Words left to learn: <span id="words_left">{{count_left}}</span></div>
 <div class="col col-auto">Words in the list: <span id="words_total">{{count_total}}</span></div>

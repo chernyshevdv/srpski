@@ -72,9 +72,10 @@ def guess_words_in_list(request: HttpRequest, id: int):
     form = GuessForm(initial={'word_id': word_to_guess['id']})
     request.session['words'] = words
     request.session['tries'] = tries
+    odsto = 100 * (count_total - count_left) / count_total
 
     return render(request, "words_guess_word.html", {'list': lst, 'lists': nav_lists, 
-                                                     'word': word_to_guess, 'form': form, 
+                                                     'word': word_to_guess, 'form': form, 'odsto': odsto,
                                                      'words': words, 'count_left': count_left, 
                                                      'count_total': count_total, 'tries': tries})
 
