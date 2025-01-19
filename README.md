@@ -10,7 +10,7 @@ The following script might run with `ENV_FILE` set depending on the environment:
 
 ```sh
 export ENV_FILE=.env
-echo "export DJANGO_SECRET_KEY=$(openssl rand -base65 50) >> $ENV_FILE
+echo "export DJANGO_SECRET_KEY=$(openssl rand -base65 50)" >> $ENV_FILE
 echo "export DJANGO_DEBUG=true" >> $ENV_FILE
 ```
 
