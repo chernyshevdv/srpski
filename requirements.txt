@@ -1,3 +1,4 @@
+python~=3.11.11
 Django==5.0.6
 django-crispy-forms==2.1
 crispy-bootstrap5==2024.2
