@@ -22,6 +22,7 @@
         <input type="submit" value="submit" id="id_submit" class="btn btn-primary rounded"/>
     </div>
     <!-- hint -->
+     {% if word.hint != "" %}
     <div class="accordion" id="hint">
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -34,6 +35,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <!-- end of hint -->
 </form>
 

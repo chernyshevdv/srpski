@@ -11,7 +11,7 @@ class Word(models.Model):
     list = models.ForeignKey(to=WordList, on_delete=models.CASCADE)
     srpski = models.CharField(max_length=250)
     drugi = models.CharField(max_length=250)
-    hint = models.TextField(default="")
+    hint = models.CharField(default="", max_length=250)
 
     def __str__(self) -> str:
         return f"Word: {self.srpski}"
