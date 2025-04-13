@@ -21,7 +21,22 @@
         {{ form|crispy }}
         <input type="submit" value="submit" id="id_submit" class="btn btn-primary rounded"/>
     </div>
+    <!-- hint -->
+    <div class="accordion" id="hint">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDiv" aria-expanded="false" aria-controls="collapseDiv">
+                    hint
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" data-bs-parent="#hint" id="collapseDiv">
+                <div class="accordion-body">{{ word.hint }}</div>
+            </div>
+        </div>
+    </div>
+    <!-- end of hint -->
 </form>
+
 {% endif %}
 <div class="progress">
     <div class="progress-bar" role="progress-bar" style="width:{{odsto}}%" aria-valuenow="{{count_left}}" aria-valuemax="{{count_total}}"></div>
