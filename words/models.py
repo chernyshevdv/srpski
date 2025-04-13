@@ -18,3 +18,6 @@ class Word(models.Model):
     
     def __eq__(self, other_id:int) -> bool:
         return self.id == other_id
+
+    def __hash__(self):
+        return hash(self.srpski)
