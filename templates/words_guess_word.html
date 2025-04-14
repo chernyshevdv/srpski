@@ -20,6 +20,15 @@
         <label for="id_guess" class="form-label">Guess word: <strong><span id="id_word_srpski">{{word.srpski}}</span></strong></label>
         {{ form|crispy }}
         <input type="submit" value="submit" id="id_submit" class="btn btn-primary rounded"/>
+        <input type="button" value="no idea" id="id_noidea" class="btn btn-secondary rounded" onclick="noIdea()"/>
+        <script>
+            function noIdea(){
+                var txtbox = document.getElementById('id_guess');
+                txtbox.value = 'noidea';
+                var frm = txtbox.form;
+                frm.submit();
+            }
+        </script>
     </div>
     <!-- hint -->
      {% if word.hint != "" %}

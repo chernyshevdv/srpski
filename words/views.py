@@ -25,7 +25,7 @@ def guess_words_in_list(request: HttpRequest, id: int):
     
     # By this row, we should have session['list_id] and session['words']
     words = request.session.get('words')
-    ic(lst, words)
+    # ic(lst, words)
     nav_lists = WordList.objects.all().order_by("title")
     
     if request.method == "POST":
@@ -36,24 +36,29 @@ def guess_words_in_list(request: HttpRequest, id: int):
         word = get_object_or_404(Word, id=word_id)
         guess = form_post['guess'].value()
         ic(word.drugi, guess)
-        ratio = fuzz.ratio(word.drugi, guess)
-        if ratio > 70:
-            msg = f"Tako je! {word.srpski} = {word.drugi}"
-            cls = messages.INFO
-            tags = "alert alert-success"
-            # remove the word from session['words']
-            ic(f"Trying to remove word {word} with id {word_id}...")
-            for i,x in enumerate(words):
-                ic(f"Is {x['id']} the right id {word_id}?")
-                if x['id'] == word_id:
-                    ic("Yup! Removing!")
-                    del words[i]
-                else:
-                    ic("no", x['id'], word_id)
-        else:
-            msg = f"Nije tačno... Pravo je: {word.drugi}"
+        if guess == "noidea":
+            msg = f"{word.srpski} = {word.drugi}"
             cls = messages.ERROR
             tags = "alert alert-warning"
+        else:
+            ratio = fuzz.ratio(word.drugi, guess)
+            if ratio > 70:
+                msg = f"Tako je! {word.srpski} = {word.drugi}"
+                cls = messages.INFO
+                tags = "alert alert-success"
+                # remove the word from session['words']
+                ic(f"Trying to remove word {word} with id {word_id}...")
+                for i,x in enumerate(words):
+                    ic(f"Is {x['id']} the right id {word_id}?")
+                    if x['id'] == word_id:
+                        ic("Yup! Removing!")
+                        del words[i]
+                    else:
+                        ic("no", x['id'], word_id)
+            else:
+                msg = f"Nije tačno... Pravo je: {word.drugi}"
+                cls = messages.ERROR
+                tags = "alert alert-warning"
         
         messages.add_message(request, level=cls, message=msg, extra_tags=tags)
 
