@@ -27,6 +27,10 @@ def guess_words_in_list(request: HttpRequest, id: int):
     words = request.session.get('words')
     # ic(lst, words)
     nav_lists = WordList.objects.all().order_by("title")
+
+    # get previous success dictionary from the session
+    stats = request.session.get('word_list_stats', {})
+    list_success = stats.get(str(id), 0)
     
     if request.method == "POST":
         tries += 1
@@ -66,11 +70,14 @@ def guess_words_in_list(request: HttpRequest, id: int):
     count_left = len(words)
     count_total = len(lst.word_set.all())
     if count_left == 0:
-        success_rate = 100 * count_total / tries 
+        list_success = 100 * count_total / tries 
         messages.add_message(request, level=messages.INFO, 
-                             message=f"Well done! You have guessed all the words. Success rate is {success_rate:.0f}%! Try another list!",
+                             message=f"Well done! You have guessed all the words. Success rate is {list_success:.0f}%! Try another list!",
                              extra_tags="alert alert-success")
         word_to_guess = {'id': 0}
+        stats[id] = list_success
+        request.session['word_list_stats'] = stats
+        
     else:
         position = random.randrange(count_left)
         word_to_guess = words[position]
@@ -82,7 +89,7 @@ def guess_words_in_list(request: HttpRequest, id: int):
     return render(request, "words_guess_word.html", {'list': lst, 'lists': nav_lists, 
                                                      'word': word_to_guess, 'form': form, 'odsto': odsto,
                                                      'words': words, 'count_left': count_left, 
-                                                     'count_total': count_total, 'tries': tries})
+                                                     'count_total': count_total, 'tries': tries, 'success': int(list_success)})
 
 
 def show_words_list(request: HttpRequest, id: int):
