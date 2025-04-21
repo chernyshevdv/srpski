@@ -17,6 +17,7 @@ def list_wordlists(request: HttpRequest):
 def guess_words_in_list(request: HttpRequest, id: int):
     lst = get_object_or_404(WordList, pk=id)
     session_list_id = request.session.get('list_id', 0)
+    guess_direction = request.session.get('guess_direction', 'forward')
     tries = request.session.get('tries', 0)
     if session_list_id != id:
         request.session['list_id'] = id
@@ -39,13 +40,14 @@ def guess_words_in_list(request: HttpRequest, id: int):
         word_id = int(form_post['word_id'].value())
         word = get_object_or_404(Word, id=word_id)
         guess = form_post['guess'].value()
-        ic(word.drugi, guess)
+        check = word.drugi if guess_direction == 'forward' else word.srpski
+        ic(check, guess)
         if guess == "noidea":
             msg = f"{word.srpski} = {word.drugi}"
             cls = messages.ERROR
             tags = "alert alert-warning"
         else:
-            ratio = fuzz.ratio(word.drugi, guess)
+            ratio = fuzz.ratio(check, guess)
             if ratio > 70:
                 msg = f"Tako je! {word.srpski} = {word.drugi}"
                 cls = messages.INFO
@@ -60,7 +62,7 @@ def guess_words_in_list(request: HttpRequest, id: int):
                     else:
                         ic("no", x['id'], word_id)
             else:
-                msg = f"Nije tačno... Pravo je: {word.drugi}"
+                msg = f"Nije tačno... Pravo je: {check}"
                 cls = messages.ERROR
                 tags = "alert alert-warning"
         
@@ -74,7 +76,7 @@ def guess_words_in_list(request: HttpRequest, id: int):
         messages.add_message(request, level=messages.INFO, 
                              message=f"Well done! You have guessed all the words. Success rate is {list_success:.0f}%! Try another list!",
                              extra_tags="alert alert-success")
-        word_to_guess = {'id': 0}
+        word_to_guess = {'id': 0, 'srpski': '', 'drugi': '', 'hint': ''}
         stats[id] = list_success
         request.session['word_list_stats'] = stats
         
@@ -82,12 +84,15 @@ def guess_words_in_list(request: HttpRequest, id: int):
         position = random.randrange(count_left)
         word_to_guess = words[position]
     form = GuessForm(initial={'word_id': word_to_guess['id']})
+    show_word = word_to_guess['srpski'] if guess_direction == 'forward' else word_to_guess['drugi']
     request.session['words'] = words
     request.session['tries'] = tries
     odsto = 100 * (count_total - count_left) / count_total
 
+
     return render(request, "words_guess_word.html", {'list': lst, 'lists': nav_lists, 
-                                                     'word': word_to_guess, 'form': form, 'odsto': odsto,
+                                                     'word': show_word, 'form': form, 'odsto': odsto,
+                                                     'hint': word_to_guess['hint'] if guess_direction == 'forward' else '',
                                                      'words': words, 'count_left': count_left, 
                                                      'count_total': count_total, 'tries': tries, 'success': int(list_success)})
 
@@ -97,3 +102,12 @@ def show_words_list(request: HttpRequest, id: int):
     lists = WordList.objects.all().order_by('title')
     words = get_list_or_404(Word, list=list)
     return render(request, "words_list.html", {"words": words, "list": list, "lists": lists})
+
+
+def set_guess_direction(request: HttpRequest):
+    referrer = request.META['HTTP_REFERER'] if 'HTTP_REFERER' in request.META else "words_lists"
+    direction = request.session.get('guess_direction', 'forward')
+    request.session['guess_direction'] = 'back' if direction == 'forward' else 'forward'
+    ic("Guess direction set to: ", request.session.get('guess_direction'))
+    
+    return redirect(referrer)
