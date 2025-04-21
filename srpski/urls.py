@@ -24,6 +24,8 @@ urlpatterns = [
     path('srpski/words/lists/', words_views.list_wordlists, name="words_lists"),
     path('srpski/words/lists/<int:id>/guess', words_views.guess_words_in_list, name="guess_words_in_list"),
     path('srpski/words/lists/<int:id>/show', words_views.show_words_list, name="show_words_list"),
+    path('srpski/words/change_guess_direction', words_views.set_guess_direction, name="set_guess_direction"),
     path('srpski/theory/<str:section>/', theory_views.theory_sections, name="theory_sections"),
+    
 	path('', words_views.list_wordlists, name="home")
 ]
